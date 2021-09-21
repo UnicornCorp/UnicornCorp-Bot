@@ -38,7 +38,7 @@ log = logging.getLogger("red.phenom4n4n.aki")
 
 class Aki(commands.Cog):
     """
-    Play Akinator in Discord!
+    Joue a Akinator sur Discord !
     """
 
     def __init__(self, bot: Red) -> None:
@@ -63,20 +63,20 @@ class Aki(commands.Cog):
     @commands.bot_has_permissions(embed_links=True, add_reactions=True)
     @commands.command(aliases=["akinator"])
     async def aki(
-        self, ctx: commands.Context, language: str.lower = "en", use_buttons: bool = True
+        self, ctx: commands.Context, language: str.lower = "fr", use_buttons: bool = True
     ):
         """
-        Start a game of Akinator!
+        Demarre une partie d'Akinator!
 
         Controls:
-        > ✅ : yes
-        > ❎ : no
-        > ❔ : i don't know
-        > 📉 : probably
-        > 📈 : probably not
-        > 🔙 : back
-        > 🏆 : win
-        > 🗑️ : cancel
+        > ✅ : oui
+        > ❎ : non
+        > ❔ : je ne sais pas
+        > 📉 : probablement
+        > 📈 : probablement pas
+        > 🔙 : retour
+        > 🏆 : gagné !
+        > 🗑️ : stopper
         """
         await ctx.trigger_typing()
         aki = Akinator()
@@ -85,10 +85,10 @@ class Aki(commands.Cog):
             await aki.start_game(language=language.replace(" ", "_"), child_mode=child_mode)
         except akinator.InvalidLanguageError:
             await ctx.send(
-                "Invalid language. Refer here to view valid languages.\n<https://github.com/NinjaSnail1080/akinator.py#functions>"
+                "Langue invalide .\n<https://github.com/NinjaSnail1080/akinator.py#functions>"
             )
         except Exception:
-            await ctx.send("I encountered an error while connecting to the Akinator servers.")
+            await ctx.send("Erreur de connection avec les serveurs Akinator.")
         else:
             aki_color = discord.Color(0xE8BC90)
             menu = get_menu(buttons=use_buttons)
