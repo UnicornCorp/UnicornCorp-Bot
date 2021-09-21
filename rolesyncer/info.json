@@ -1,0 +1,16 @@
+{
+  "author": [
+    "Dav"
+  ],
+  "description": "Adds a role to a user when another specified role is added.",
+  "hidden": false,
+  "install_msg": "Thank you for installing rolesyncer.",
+  "short": "Sync roles to each other.",
+  "tags": [
+    "roles",
+    "sync",
+    "autorole",
+    "tools"
+  ],
+  "end_user_data_statement": "This cog does not store end user data."
+}
