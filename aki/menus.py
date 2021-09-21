@@ -23,14 +23,14 @@ CANCEL = "🗑️"
 button_meta = namedtuple("ButtonMeta", "style label")
 
 EMOJI_BUTTONS = {
-    YES: button_meta(style=3, label="oui"),
-    NO: button_meta(style=4, label="non"),
-    IDK: button_meta(style=1, label="Je ne sais pas"),
-    PROBABLY: button_meta(style=1, label="probablement"),
-    PROBABLY_NOT: button_meta(style=1, label="probablement pas"),
-    BACK: button_meta(style=2, label="retour"),
-    WIN: button_meta(style=2, label="gagné !"),
-    CANCEL: button_meta(style=2, label="stopper"),
+    YES: button_meta(style=3, label="yes"),
+    NO: button_meta(style=4, label="no"),
+    IDK: button_meta(style=1, label="idk"),
+    PROBABLY: button_meta(style=1, label="probably"),
+    PROBABLY_NOT: button_meta(style=1, label="probably not"),
+    BACK: button_meta(style=2, label="back"),
+    WIN: button_meta(style=2, label="win"),
+    CANCEL: button_meta(style=2, label="cancel"),
 }
 
 
