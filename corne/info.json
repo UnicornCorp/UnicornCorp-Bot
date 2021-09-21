@@ -1,0 +1,11 @@
+{
+    "author" : ["UnicornCorp"],
+    "install_msg" : "Merci d'installer ce cog useless!",
+    "name" : "corne",
+    "hidden" : false,
+    "disabled" : false,
+    "short" : "!corne user pour connaitre la taille !.",
+    "description" : "Découvre la taille de ta corne ! 100% fiable !",
+    "tags" : ["corne"],
+    "end_user_data_statement": "This cog does not store any end user data."
+}

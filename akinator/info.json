@@ -1,0 +1,10 @@
+{
+    "author": ["Predeactor", "A bit of everyone who helped"],
+    "end_user_data_statement": "This cog does not save data about users persistently.",
+    "short": "Akinator will guess a real or fictitious character by answering questions.",
+    "description": "Akinator, the genius, will read in your mind and guess who you are thinking of! Answer Akinator's questions and get impressed by his talent!",
+    "install_msg": "Thank for installing my Akinator cog! As always, this cog is in beta, but available and should be working fine.\nActually, you've installed a normal version of akinator.py, but you can speed it up by using `[p]pipinstall akinator.py[fast_async]`, if you error out, you may be unable to get the speedup.\nError should be reported at my repo, at https://github.com/Predeactor/Predeactor-Cogs, but go get some support in my server, in here: https://discord.gg/zg6ydua",
+    "requirements": [
+        "akinator.py[async]"
+    ]
+}

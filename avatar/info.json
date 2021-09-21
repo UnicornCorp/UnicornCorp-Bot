@@ -1,0 +1,10 @@
+{
+    "author" : ["YukirinFork - UnicornCorp"],
+    "install_msg" : "Tape `[p]help pp` .",
+    "name" : "Avatar",
+    "short" : "PP url",
+    "description" : "pp url",
+    "disabled" : false,
+    "tags" : ["avatar", "Utility"],
+    "min_python_version": [3, 6, 0]
+}
