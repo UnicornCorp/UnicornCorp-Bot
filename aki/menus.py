@@ -11,26 +11,26 @@ log = logging.getLogger("red.phenom4n4n.aki.menus")
 
 NSFW_WORDS = ["porn", "sex"]
 
-YES = "✅"
-NO = "❌"
+OUI = "✅"
+NON = "❌"
 IDK = "❔"
-PROBABLY = "📉"
-PROBABLY_NOT = "📈"
-BACK = "🔙"
+PROBABLEMENT = "📉"
+PROBABLEMENT_PAS = "📈"
+RETOUR = "🔙"
 WIN = "🏆"
-CANCEL = "🗑️"
+STOPPER = "🗑️"
 
 button_meta = namedtuple("ButtonMeta", "style label")
 
 EMOJI_BUTTONS = {
-    YES: button_meta(style=3, label="yes"),
-    NO: button_meta(style=4, label="no"),
+    OUI: button_meta(style=3, label="OUI"),
+    NON: button_meta(style=4, label="NON"),
     IDK: button_meta(style=1, label="idk"),
-    PROBABLY: button_meta(style=1, label="probably"),
-    PROBABLY_NOT: button_meta(style=1, label="probably not"),
-    BACK: button_meta(style=2, label="back"),
+    PROBABLEMENT: button_meta(style=1, label="probablement"),
+    PROBABLEMENT_PAS: button_meta(style=1, label="probablement pas"),
+    RETOUR: button_meta(style=2, label="retour"),
     WIN: button_meta(style=2, label="win"),
-    CANCEL: button_meta(style=2, label="cancel"),
+    STOPPER: button_meta(style=2, label="stopper"),
 }
 
 
@@ -49,16 +49,16 @@ class AkiMenu(menus.Menu):
     async def send_initial_message(self, ctx: commands.Context, channel: discord.TextChannel):
         return await channel.send(embed=self.current_question_embed())
 
-    @menus.button(YES)
-    async def yes(self, payload: discord.RawReactionActionEvent):
+    @menus.button(OUI)
+    async def non(self, payload: discord.RawReactionActionEvent):
         self.num += 1
-        await self.answer("yes", payload)
+        await self.answer("OUI", payload)
         await self.send_current_question(payload)
 
-    @menus.button(NO)
-    async def no(self, payload: discord.RawReactionActionEvent):
+    @menus.button(NON)
+    async def non(self, payload: discord.RawReactionActionEvent):
         self.num += 1
-        await self.answer("no", payload)
+        await self.answer("non", payload)
         await self.send_current_question(payload)
 
     @menus.button(IDK)
@@ -67,26 +67,26 @@ class AkiMenu(menus.Menu):
         await self.answer("idk", payload)
         await self.send_current_question(payload)
 
-    @menus.button(PROBABLY)
-    async def probably(self, payload: discord.RawReactionActionEvent):
+    @menus.button(PROBABLEMENT)
+    async def probablement(self, payload: discord.RawReactionActionEvent):
         self.num += 1
-        await self.answer("probably", payload)
+        await self.answer("probablement", payload)
         await self.send_current_question(payload)
 
-    @menus.button(PROBABLY_NOT)
-    async def probably_not(self, payload: discord.RawReactionActionEvent):
+    @menus.button(PROBABLEMENT_PAS)
+    async def probablement_pas(self, payload: discord.RawReactionActionEvent):
         self.num += 1
-        await self.answer("probably not", payload)
+        await self.answer("probablement pas", payload)
         await self.send_current_question(payload)
 
-    @menus.button(BACK)
-    async def back(self, payload: discord.RawReactionActionEvent):
+    @menus.button(RETOUR)
+    async def retour(self, payload: discord.RawReactionActionEvent):
         try:
-            await self.aki.back()
+            await self.aki.retour()
         except akinator.CantGoBackAnyFurther:
             await self.send(
                 payload,
-                "Tu ne peux pas revenir en arrière a la première question !",
+                "Tu ne peux revenir en arrière a la première question.",
                 delete_after=10,
             )
         else:
@@ -100,7 +100,7 @@ class AkiMenu(menus.Menu):
     async def react_win(self, payload: discord.RawReactionActionEvent):
         await self.win(payload)
 
-    @menus.button(CANCEL)
+    @menus.button(STOPPER)
     async def end(self, payload: discord.RawReactionActionEvent):
         await self.message.delete()
         self.stop()
@@ -127,8 +127,8 @@ class AkiMenu(menus.Menu):
     def get_nsfw_embed(self):
         return discord.Embed(
             color=self.color,
-            title="Je crois avoir trouvé mais....",
-            description="Réessaye dans un salon NSFW.",
+            title="J'ai deviné mais....",
+            description="Vas dans un salon NSFW.",
         )
 
     def text_is_nsfw(self, text: str) -> bool:
@@ -161,10 +161,10 @@ class AkiMenu(menus.Menu):
     async def finalize(self, timed_out: bool):
         if timed_out:
             await self.edit_or_send(
-                None, content="Akinator s'est endormis.", embed=None, components=[]
+                None, content="Akinator game timed out.", embed=None, components=[]
             )
 
-    async def cancel(self, payload, message: str = "Akinator rentre chez lui."):
+    async def cancel(self, payload, message: str = "Akinator game cancelled."):
         await self.edit_or_send(payload, content=message, embed=None, components=[])
         self.stop()
 
@@ -182,14 +182,14 @@ class AkiMenu(menus.Menu):
         except akinator.AkiNoQuestions:
             await self.win(payload)
         except akinator.AkiTimedOut:
-            await self.cancel("Connection aux serveurs Akinator perdu.")
+            await self.cancel("The connection to the Akinator servers was lost.")
         except Exception as error:
             log.exception(
-                f"Erreur avec : {message} lors de cette session",
+                f"Encountered an exception while answering with {message} during Akinator session",
                 exc_info=True,
             )
             await self.edit_or_send(
-                payload, content=f"Akinator erreur:\n`{error}`", embed=None
+                payload, content=f"Akinator game errored out:\n`{error}`", embed=None
             )
             self.stop()
 
