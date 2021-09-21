@@ -23,14 +23,14 @@ CANCEL = "🗑️"
 button_meta = namedtuple("ButtonMeta", "style label")
 
 EMOJI_BUTTONS = {
-    YES: button_meta(style=3, label="yes"),
-    NO: button_meta(style=4, label="no"),
-    IDK: button_meta(style=1, label="idk"),
-    PROBABLY: button_meta(style=1, label="probably"),
-    PROBABLY_NOT: button_meta(style=1, label="probably not"),
-    BACK: button_meta(style=2, label="back"),
-    WIN: button_meta(style=2, label="win"),
-    CANCEL: button_meta(style=2, label="cancel"),
+    YES: button_meta(style=3, label="oui"),
+    NO: button_meta(style=4, label="non"),
+    IDK: button_meta(style=1, label="Je ne sais pas"),
+    PROBABLY: button_meta(style=1, label="probablement"),
+    PROBABLY_NOT: button_meta(style=1, label="probablement pas"),
+    BACK: button_meta(style=2, label="retour"),
+    WIN: button_meta(style=2, label="gagné !"),
+    CANCEL: button_meta(style=2, label="stopper"),
 }
 
 
@@ -86,7 +86,7 @@ class AkiMenu(menus.Menu):
         except akinator.CantGoBackAnyFurther:
             await self.send(
                 payload,
-                "You can't go back on the first question, try a different option instead.",
+                "Tu ne peux pas revenir en arrière a la première question !",
                 delete_after=10,
             )
         else:
@@ -127,8 +127,8 @@ class AkiMenu(menus.Menu):
     def get_nsfw_embed(self):
         return discord.Embed(
             color=self.color,
-            title="I guessed it, but this result is inappropriate.",
-            description="Try again in a NSFW channel.",
+            title="Je crois avoir trouvé mais....",
+            description="Réessaye dans un salon NSFW.",
         )
 
     def text_is_nsfw(self, text: str) -> bool:
@@ -161,10 +161,10 @@ class AkiMenu(menus.Menu):
     async def finalize(self, timed_out: bool):
         if timed_out:
             await self.edit_or_send(
-                None, content="Akinator game timed out.", embed=None, components=[]
+                None, content="Akinator s'est endormis.", embed=None, components=[]
             )
 
-    async def cancel(self, payload, message: str = "Akinator game cancelled."):
+    async def cancel(self, payload, message: str = "Akinator rentre chez lui."):
         await self.edit_or_send(payload, content=message, embed=None, components=[])
         self.stop()
 
@@ -182,14 +182,14 @@ class AkiMenu(menus.Menu):
         except akinator.AkiNoQuestions:
             await self.win(payload)
         except akinator.AkiTimedOut:
-            await self.cancel("The connection to the Akinator servers was lost.")
+            await self.cancel("Connection aux serveurs Akinator perdu.")
         except Exception as error:
             log.exception(
-                f"Encountered an exception while answering with {message} during Akinator session",
+                f"Erreur avec : {message} lors de cette session",
                 exc_info=True,
             )
             await self.edit_or_send(
-                payload, content=f"Akinator game errored out:\n`{error}`", embed=None
+                payload, content=f"Akinator erreur:\n`{error}`", embed=None
             )
             self.stop()
 
