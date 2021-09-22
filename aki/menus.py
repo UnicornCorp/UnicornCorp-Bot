@@ -11,26 +11,26 @@ log = logging.getLogger("red.phenom4n4n.aki.menus")
 
 NSFW_WORDS = ["porn", "sex"]
 
-OUI = "✅"
-NON = "❌"
+YES = "✅"
+NO = "❌"
 IDK = "❔"
-PROBABLEMENT = "📉"
-PROBABLEMENT_PAS = "📈"
-RETOUR = "🔙"
+PROBABLY = "📉"
+PROBABLY_NOT = "📈"
+BACK = "🔙"
 WIN = "🏆"
-STOPPER = "🗑️"
+CANCEL = "🗑️"
 
 button_meta = namedtuple("ButtonMeta", "style label")
 
 EMOJI_BUTTONS = {
-    OUI: button_meta(style=3, label="OUI"),
-    NON: button_meta(style=4, label="NON"),
+    YES: button_meta(style=3, label="yes"),
+    NO: button_meta(style=4, label="no"),
     IDK: button_meta(style=1, label="idk"),
-    PROBABLEMENT: button_meta(style=1, label="probablement"),
-    PROBABLEMENT_PAS: button_meta(style=1, label="probablement pas"),
-    RETOUR: button_meta(style=2, label="retour"),
+    PROBABLY: button_meta(style=1, label="probably"),
+    PROBABLY_NOT: button_meta(style=1, label="probably not"),
+    BACK: button_meta(style=2, label="back"),
     WIN: button_meta(style=2, label="win"),
-    STOPPER: button_meta(style=2, label="stopper"),
+    CANCEL: button_meta(style=2, label="cancel"),
 }
 
 
@@ -49,16 +49,16 @@ class AkiMenu(menus.Menu):
     async def send_initial_message(self, ctx: commands.Context, channel: discord.TextChannel):
         return await channel.send(embed=self.current_question_embed())
 
-    @menus.button(OUI)
-    async def non(self, payload: discord.RawReactionActionEvent):
+    @menus.button(YES)
+    async def yes(self, payload: discord.RawReactionActionEvent):
         self.num += 1
-        await self.answer("OUI", payload)
+        await self.answer("yes", payload)
         await self.send_current_question(payload)
 
-    @menus.button(NON)
-    async def non(self, payload: discord.RawReactionActionEvent):
+    @menus.button(NO)
+    async def no(self, payload: discord.RawReactionActionEvent):
         self.num += 1
-        await self.answer("non", payload)
+        await self.answer("no", payload)
         await self.send_current_question(payload)
 
     @menus.button(IDK)
@@ -67,26 +67,26 @@ class AkiMenu(menus.Menu):
         await self.answer("idk", payload)
         await self.send_current_question(payload)
 
-    @menus.button(PROBABLEMENT)
-    async def probablement(self, payload: discord.RawReactionActionEvent):
+    @menus.button(PROBABLY)
+    async def probably(self, payload: discord.RawReactionActionEvent):
         self.num += 1
-        await self.answer("probablement", payload)
+        await self.answer("probably", payload)
         await self.send_current_question(payload)
 
-    @menus.button(PROBABLEMENT_PAS)
-    async def probablement_pas(self, payload: discord.RawReactionActionEvent):
+    @menus.button(PROBABLY_NOT)
+    async def probably_not(self, payload: discord.RawReactionActionEvent):
         self.num += 1
-        await self.answer("probablement pas", payload)
+        await self.answer("probably not", payload)
         await self.send_current_question(payload)
 
-    @menus.button(RETOUR)
-    async def retour(self, payload: discord.RawReactionActionEvent):
+    @menus.button(BACK)
+    async def back(self, payload: discord.RawReactionActionEvent):
         try:
-            await self.aki.retour()
+            await self.aki.back()
         except akinator.CantGoBackAnyFurther:
             await self.send(
                 payload,
-                "Tu ne peux revenir en arrière a la première question.",
+                "You can't go back on the first question, try a different option instead.",
                 delete_after=10,
             )
         else:
@@ -100,7 +100,7 @@ class AkiMenu(menus.Menu):
     async def react_win(self, payload: discord.RawReactionActionEvent):
         await self.win(payload)
 
-    @menus.button(STOPPER)
+    @menus.button(CANCEL)
     async def end(self, payload: discord.RawReactionActionEvent):
         await self.message.delete()
         self.stop()
@@ -127,8 +127,8 @@ class AkiMenu(menus.Menu):
     def get_nsfw_embed(self):
         return discord.Embed(
             color=self.color,
-            title="J'ai deviné mais....",
-            description="Vas dans un salon NSFW.",
+            title="I guessed it, but this result is inappropriate.",
+            description="Try again in a NSFW channel.",
         )
 
     def text_is_nsfw(self, text: str) -> bool:
