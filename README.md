@@ -8,7 +8,7 @@ Ce repo me sert a regrouper tout les cogs que j'utilise pour mon bot. Tout les d
 
 | Nom | FR ? | A faire |
 | ------ | ------ | ------ |
-| akinator | Deja traduis |
+| aki | Trad en cours|
 | anotherpingcog
 | autoroom | Deja traduis |
 | avatar | Deja traduis |
